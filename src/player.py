@@ -7,6 +7,6 @@ class Player:
         self.current_room = current_room
 
 if __name__ == "__main__": 
-    player_1 = Player(room='outside')
+    player_1 = Player(current_room='outside')
     print(player_1)
  
