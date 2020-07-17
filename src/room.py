@@ -6,10 +6,19 @@ class Room:
     s_to = None
     e_to = None
     w_to = None
+    items = []
     
-    def __init__(self, name, description):
+    def __init__(self, name, description, item=None):
         self.name = name
         self.description = description
+
+    def add_items(self, item):
+        self.item = item 
+
+    def __str__(self):
+        return f'Visible room items: {self.items}'
+
+
 
 
 if __name__ == '__main__':

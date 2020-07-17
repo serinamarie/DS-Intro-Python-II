@@ -74,7 +74,7 @@ while not direction == 'q':
     if direction == 'n':
 
         # This will test whether the resulting room is no longer a class object location (meaning it doesn't exist)
-        if not player_1.current_room.n_to:
+        if not player_1.current_room.move():
             error_message = ("-------------------------------------------------------------",
             "Wrong way, cowboy. You can't go north here.",
             "Try a new direction!",
