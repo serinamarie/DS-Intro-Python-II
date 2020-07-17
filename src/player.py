@@ -54,9 +54,8 @@ class Player:
             else:
                 self.current_room = self.current_room.w_to
                 print('\n'.join(congratulatory_message))
-        elif direction == 'q':
-            "You gave up fast!"
-            sys.exit()
+        else:
+            print("Error")
 
 if __name__ == "__main__": 
     player_1 = Player(name='Serina', current_room='outside')

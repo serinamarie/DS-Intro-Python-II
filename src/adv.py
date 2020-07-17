@@ -35,41 +35,33 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
-#
-# Main
-#
 
 # Make a new player object that is currently in the 'outside' room.
-
 player_1 = Player(name='Serina', current_room=room['outside'])
 
-# Write a loop that:
+direction = None
 
-# Prints the current room name
-# Prints the current description (the textwrap module might be useful here).
-print(f'Hello, stranger. You are currently in the {player_1.current_room.name}. {player_1.current_room.description}. \n')
+intro = ("Hello stranger. Good luck finding my treasure.")
 
-# Waits for user input and decides what to do.
-output = ('Choose a direction to travel in order to find the treasure.', 
+print(intro)
+
+output = ('\nChoose a direction to travel in order to find the treasure.', 
 f'But beware, there are many wrong paths to take:\n'
 '[n] North  [s] South  [e] East  [w] West  [q] Quit\n')
 
-direction = input('\n'.join(output))
+# Write a loop that:
 
-
-
-
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-
+# If the user enters "q", quit the game.
 while not direction == 'q': 
 
-    # You are here 
+    # Prints the current room name. 
+    # Prints the current description (the textwrap module might be useful here).
     print(f'You are in the {player_1.current_room.name}. \n{player_1.current_room.description}.')
 
-    # Where do you want to go?
+    # Waits for user input and decides what to do.
     direction = input('\n'.join(output))
 
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
     player_1.move(direction)
         
-# If the user enters "q", quit the game.
