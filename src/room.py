@@ -1,22 +1,26 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
+from item import Item
 
 class Room:
     n_to = None
     s_to = None
     e_to = None
     w_to = None
-    items = []
+    items = None
     
-    def __init__(self, name, description, item=None):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
 
-    def add_items(self, item):
-        self.item = item 
+    def remove(self, item):
+        self.items.remove(item)
+    
+    def add(self, item):
+        self.items.add(item)
 
     def __str__(self):
-        return f'Visible room items: {self.items}'
+        return f'Room items: {self.items}'
 
 
 
@@ -41,6 +45,12 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-    room['outside'].n_to = room['foyer']
 
-    print(room['outside'].n_to.name)
+# Declare all the items
+
+item = {
+    'candelabrum': Item("Candelabrum",
+                        "Your way is illuminated, young luminary."),
+    'bat': Item("Bat",
+                "You have been infected with coronavirus.")
+}
