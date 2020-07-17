@@ -46,8 +46,8 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 # Place items in rooms
-room['foyer'].items = item['candelabrum']
-room['narrow'].items = item['bat']
+room['foyer'].items = ['candelabrum']
+room['narrow'].items = ['bat']
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -59,7 +59,7 @@ intro = ("\nHello stranger. Good luck finding my treasure!")
 
 print(intro)
 
-what_to_do = ('\nTry and pick up an item if you like by typing in [get item].',
+what_to_do = ('\nTry and pick up or drop an item if you like by typing in [get item] or [drop item].',
  'For example, [get apple] would attempt to pick up an apple if it was in this room.',
  '\nOtherwise, choose a direction to travel in order to find the treasure.', 
 f'But beware, there are many wrong paths to take:\n'
@@ -79,7 +79,7 @@ while not direction == 'q':
     print('\n'.join(room_description_and_items))
 
     if player_1.current_room.items:
-        print(f'The {player_1.current_room.name} contains these items: {player_1.current_room.items.name}')
+        print(f'The {player_1.current_room.name} contains these items: {player_1.current_room.items}')
     else:
         pass
 
@@ -100,31 +100,33 @@ while not direction == 'q':
 
         # If the user enters get or take followed by an Item name, 
         if verb_object[0].lower() == 'get' or 'take':
-            print(verb_object[0], verb_object[1])
 
             # Look at the contents of the current Room to see if the item is there
-            if verb_object[1] in player_1.current_room.items.name:
+            if verb_object[1].lower() in player_1.current_room.items:
 
+                # Since it is, remove item from room and add to player
                 player_1.current_room.remove(verb_object[1])
                 player_1.add(verb_object[1])
+                item[verb_object[1]].on_take(verb_object[1])
 
-
+            # If it's not in the room
             else: 
                 print("That item isn't in this room. Wish all you want!")
+        
+        # If they did not specify the correct verb
         else:
             print("Not a valid verb to pick up object")
 
-        # If the user enters get or take followed by an Item name, 
+        # If the user enters drop followed by an item name, 
         if verb_object[0].lower() == 'drop':
 
-            # Look at the contents of the current Room to see if the item is there.
-            item = verb_object[1]
+            # Look at the contents of the current Player to see if the item is there.
+            if verb_object[1].lower() in player_1.items:
 
-            if item.lower() in player_1.items:
-
-                player_1.remove(item)
-                player_1.add(item)
-                player_1.on_take(item)
+                # Since it is, remove item from player and add to room
+                player_1.items.drop(verb_object[1])
+                player_1.current_room.add(verb_object[1])
+                item[verb_object[1]].on_drop(verb_object[1])
                 
 
             else: 

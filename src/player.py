@@ -5,14 +5,13 @@ class Player:
 
     items = []
 
-    def __init__(self, name, current_room, direction=None, items=None):
+    def __init__(self, name, current_room, direction=None):
         self.name = name
         self.current_room = current_room
         self.direction = direction
-        self.items = items
 
     def add(self, item):
-        self.items.add(item)
+        self.items.append(item)
 
     def drop(self, item):
         self.items.drop(item)
