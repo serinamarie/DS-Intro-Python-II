@@ -14,7 +14,7 @@ class Room:
         self.name = name
         self.description = description
 
-    def remove(self, item):
+    def drop(self, item):
         self.items.remove(item)
     
     def add(self, item):
@@ -77,14 +77,16 @@ earlier adventurers. The only exit is to the south."""),
 
     print("Items in current room:", player_1.current_room.items)
 
-    print("Delete item:", player_1.current_room.remove('candelabrum'))
+    print("C put in room", player_1.current_room.drop('candelabrum'))
+    print("Add c to player:", player_1.add('candelabrum'))
 
-    player_1 = Player(name='Serina', current_room=room['foyer'])
-
-    print("Items in current room:", player_1.current_room.items)
+    print("No items in current room:", player_1.current_room.items)
 
     player_1.current_room.add('bat')
-    print(player_1.current_room.items)
+    print("Bat added to room:", player_1.current_room.items)
+    player_1.current_room.drop("bat")
+    player_1.add('bat')
+    print("Player has bat:", player_1.items)
 
     
     

@@ -13,7 +13,7 @@ class Player:
     def add(self, item):
         self.items.append(item)
 
-    def remove(self, item):
+    def drop(self, item):
         self.items.remove(item)
 
     def inventory(self, inv):

@@ -99,14 +99,29 @@ while not direction == 'q':
         #Split item-related command
         verb_object = command.split(" ")
 
+        # If the user enters 'drop' followed by an item name
+        if verb_object[0].lower() == 'drop':
+
+            # Look at the inventory of the current player to see if the item is there
+            if verb_object[1].lower() in player_1.items:
+
+                # Since it is, remove item from player
+                player_1.drop(verb_object[1])
+                
+                # And put it in the room
+                player_1.current_room.add(verb_object[1])
+
+                # Let the player know they have dropped the item
+                item[verb_object[1]].on_drop(verb_object[1])
+
         # If the user enters 'get' or 'take' followed by an item name
-        if verb_object[0].lower() == 'get' or 'take':
+        elif verb_object[0].lower() == 'get' or 'take':
 
             # Look at the contents of the current room to see if the item is there
             if verb_object[1].lower() in player_1.current_room.items:
 
                 # Since it is, remove item from room
-                player_1.current_room.remove(verb_object[1])
+                player_1.current_room.drop(verb_object[1])
 
                 # And add the item to the player
                 player_1.add(verb_object[1])
@@ -118,24 +133,11 @@ while not direction == 'q':
             else: 
                 print("That item isn't in this room. Wish all you want!")
         
+        
+
         # If they did not specify the correct verb to grab the object
         else:
             print("Not a valid verb to pick up object")
-
-        # If the user enters 'drop' followed by an item name
-        if verb_object[0].lower() == 'drop':
-
-            # Look at the inventory of the current player to see if the item is there
-            if verb_object[1].lower() in player_1.items:
-
-                # Since it is, remove item from player
-                player_1.items.remove(verb_object[1])
-                
-                # And put it in the room
-                player_1.current_room.add(verb_object[1])
-
-                # Let the player know they have dropped the item
-                item[verb_object[1]].on_drop(verb_object[1])
                 
 
             # else: 
