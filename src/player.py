@@ -49,8 +49,8 @@ class Player:
         elif direction == 'e':
             if not self.current_room.e_to:
                 error_message = ("-------------------------------------------------------------", 
-                "Going east? You've just walked right into a wall.",
-                "Try a new direction!",
+                "East, you say? You sure know how to walk into a wall.",
+                "Try a new direction once your headache wears off.",
                 "-------------------------------------------------------------\n")
                 print('\n'.join(error_message))
             else:
@@ -60,13 +60,17 @@ class Player:
         elif direction == 'w':
             if self.current_room.w_to == None:
                 error_message = ("-------------------------------------------------------------",
-                "Going west? You're the best. Just not at this game.",
-                "Try a new direction!",
+                "Going west? You're the best. Just not at this game. Hm. I have to say I expected more.",
                 "-------------------------------------------------------------\n")
                 print('\n'.join(error_message))
             else:
                 self.current_room = self.current_room.w_to
                 print('\n'.join(congratulatory_message))
+        else:
+            # Print an error message if the movement isn't allowed.
+            error_message = ("\nWho do you think you are? A bishop or a knight who can move diagonally or in an L?",
+                "You are but only a pawn. Choose a cardinal direction.")
+            print('\n'.join(error_message))
 
 if __name__ == "__main__": 
     player_1 = Player(name='Serina', current_room='outside')

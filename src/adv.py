@@ -1,15 +1,20 @@
 from room import Room
 from player import Player
-from item import Item
+from item import Item, LightSource
 
 # Declare all the items
 
 item = {
-    'candelabrum': Item("candelabrum",
-                        "Your way is illuminated, young luminary."),
+    'armor': Item("armor",
+                        "You're either very safe now or just very warm. Likely both."),
     'bat': Item("bat",
-                "You have been infected with coronavirus.")
-}
+                "You are now infected with coronavirus. Best hurry now."),
+    'candelabrum': LightSource("candelabrum",
+                        "Your way is illuminated, young luminary."),
+    'lamp': LightSource('lamp',
+                        "The better to see all the cobwebs with.")
+    }
+
 
 # Declare all the rooms
 
@@ -17,19 +22,20 @@ room = {
     'outside': Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
 
-    'foyer': Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+    'foyer': Room("Foyer", 
+                    """Dim light filters in from the south. Dusty passages run north and east."""),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+    'overlook': Room("Grand Overlook", 
+                    """A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in
+                    the distance, but there is no way across the chasm."""),
 
-    'narrow': Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow': Room("Narrow Passage", 
+                    """The narrow passage bends here from west to north. The smell of gold permeates 
+                    the air."""),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+    'treasure': Room("Treasure Chamber", 
+                    """You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by
+                    earlier adventurers. The only exit is to the south."""),
 }
 
 
@@ -46,7 +52,11 @@ room['treasure'].s_to = room['narrow']
 
 # Place items in rooms
 room['foyer'].items = ['candelabrum']
-room['narrow'].items = ['bat']
+room['narrow'].items = ['bat', 'lamp']
+
+room['foyer'].is_light = True
+room['overlook'].is_light = True 
+room['outside'].is_light = True
 
 
 # Make a new player object that is currently in the 'outside' room.
@@ -72,8 +82,7 @@ while not direction == 'q':
     # Prints the current room name. 
     # Prints the current description (the textwrap module might be useful here).
     room_description_and_items = (f'\nYou are in the {player_1.current_room.name}.',
-                                f'{player_1.current_room.description}.',
-                                f"Items you posess: {player_1.items}")
+                                f'{player_1.current_room.description}.')
 
     print('\n'.join(room_description_and_items))
 
@@ -81,7 +90,11 @@ while not direction == 'q':
     if player_1.current_room.items:
         print(f'The {player_1.current_room.name} contains these items: {player_1.current_room.items}')
     else:
-        pass
+        print("This room contains no objects to pick up.")
+
+    # See if the current room is lit for the player or player has a lightsource item
+    if player_1.current_room.is_light == False and isinstance(player_1.items, LightSource) == False:
+        print("It's pitch black! Scared yet?")
 
     # Waits for user input and decides what to do.
     command = input('\n'.join(what_to_do))
@@ -89,9 +102,19 @@ while not direction == 'q':
     # Assess input length to see if player wants to move or do an item-related task
     if len(command.split(" ")) == 1:
 
+        if command == 'i':
+            if player_1.items:
+                print(f"Inventory: {player_1.items}")
+            else:
+                print("Your pockets are turned out. A fly buzzes away into the darkness.")
+            
+
         # If the user enters a cardinal direction, attempt to move to the room there.
-        # Print an error message if the movement isn't allowed.
-        player_1.move(command)
+        else:
+            try:
+                player_1.move(command)
+            except:
+                "Unknown error occurred"
 
     # If player wants to do something with an item
     elif len(command.split(" ")) == 2:

@@ -8,6 +8,7 @@ class Room:
     s_to = None
     e_to = None
     w_to = None
+    is_light = False
     items = []
     
     def __init__(self, name, description):
@@ -87,6 +88,9 @@ earlier adventurers. The only exit is to the south."""),
     player_1.current_room.drop("bat")
     player_1.add('bat')
     print("Player has bat:", player_1.items)
+    print(player_1.current_room.is_light)
 
     
+
+    if player_1.current_room.is_light == False and isinstance(player_1.items, LightSource) == False:
     
