@@ -1,0 +1,9 @@
+Scope - Where are variable can and cannot be accessed. The rules for that can be described with Local, Enclosing, Global, Builtin
+
+Builtin: Reserved names in Python builtin modules
+
+Global scope: Can be accessed everywhere. It isn’t useful all the time because, for instance, if you have a loop, you might create a variable within it that you don’t want to be accessed all the time. Clutters memory, causes conflicts.
+
+Enclosed: In a nested function
+
+Local: In a function

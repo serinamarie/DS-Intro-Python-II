@@ -1,6 +1,6 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
-from item import Item
+from item import Item, LightSource
 from player import Player
 
 class Room:
@@ -32,11 +32,15 @@ if __name__ == '__main__':
     # Declare all the items
 
     item = {
-    'candelabrum': Item("Candelabrum",
+    'armor': Item("armor",
+                        "You're either very safe now or just very warm. Likely both."),
+    'bat': Item("bat",
+                "You are now infected with coronavirus. Best hurry now."),
+    'candelabrum': LightSource("candelabrum",
                         "Your way is illuminated, young luminary."),
-    'bat': Item("Bat",
-                "You have been infected with coronavirus.")
-}
+    'lamp': LightSource('lamp',
+                        "The better to see all the cobwebs with.")
+    }
     
     room = {
     'outside':  Room("Outside Cave Entrance",
@@ -78,8 +82,7 @@ earlier adventurers. The only exit is to the south."""),
 
     print("Items in current room:", player_1.current_room.items)
 
-    print("C put in room", player_1.current_room.drop('candelabrum'))
-    print("Add c to player:", player_1.add('candelabrum'))
+    print("C put in room", player_1.current_room.add('lamp'))
 
     print("No items in current room:", player_1.current_room.items)
 
@@ -88,9 +91,12 @@ earlier adventurers. The only exit is to the south."""),
     player_1.current_room.drop("bat")
     player_1.add('bat')
     print("Player has bat:", player_1.items)
-    print(player_1.current_room.is_light)
+    print(player_1.current_room.name)
 
-    
+    player_1.add('lamp')
+    player_1.drop('bat')
+    print(player_1.items)
 
-    if player_1.current_room.is_light == False and isinstance(player_1.items, LightSource) == False:
+    for i in player_1.items:
+        print(type(i))
     
